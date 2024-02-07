@@ -1,7 +1,7 @@
 // components/Navbar.js
 import Link from 'next/link';
 import Image from 'next/image';
-import styles from './Navbar.module.css'; // Make sure to create this CSS module
+import styles from '@/styles/Navbar.module.css'
 
 function Navbar() {
   return (
@@ -10,22 +10,22 @@ function Navbar() {
         <ul>
           <li className={styles.active}>
             <Link href="/">
-              <a>Right Now</a>
+              <p>Right Now</p>
             </Link>
           </li>
           <li>
             <Link href="/courses">
-              <a>Courses</a>
+              <p>Courses</p>
             </Link>
           </li>
           <li>
             <Link href="/students">
-              <a>Students</a>
+              <p>Students</p>
             </Link>
           </li>
           <li>
             <Link href="/logout">
-              <a>Logout</a>
+              <p>Logout</p>
             </Link>
           </li>
         </ul>
