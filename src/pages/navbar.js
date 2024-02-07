@@ -10,22 +10,22 @@ function Navbar() {
         <ul>
           <li className={styles.active}>
             <Link href="/">
-              <p>Right Now</p>
+              <p><i className="bi bi-calendar-event"></i> Right Now</p>
             </Link>
           </li>
           <li>
             <Link href="/courses">
-              <p>Courses</p>
+              <p><i className="bi bi-hdd-stack"></i> Courses</p>
             </Link>
           </li>
           <li>
             <Link href="/students">
-              <p>Students</p>
+              <p><i className="bi bi-people"></i> Students</p>
             </Link>
           </li>
           <li>
             <Link href="/logout">
-              <p>Logout</p>
+              <p><i className="bi bi-box-arrow-right"></i> Logout</p>
             </Link>
           </li>
         </ul>
