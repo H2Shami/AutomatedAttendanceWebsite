@@ -6,16 +6,16 @@ import styles from '@/styles/Home.module.css'
 const inter = Inter({ subsets: ['latin'] })
 
 export default function Home() {
-  return (
-    <>
-      <Head>
-        <title>Automated Attendance</title>
-        <meta name="description" content="Manage your automatic attendance device remotely!" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-      </Head>
-      <main className={styles.main}>
+    return (
+        <>
+            <Head>
+                <title>Automated Attendance</title>
+                <meta name="description" content="Manage your automatic attendance device remotely!" />
+                <meta name="viewport" content="width=device-width, initial-scale=1" />
+            </Head>
+            <main className={styles.main}>
 
-      </main>
-    </>
-  )
+            </main>
+        </>
+    )
 }

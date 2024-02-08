@@ -1,0 +1,38 @@
+/* studentCard.module.css */
+
+.StudentCard {
+    border-radius: 30px;
+    background: #ededed;
+    box-shadow: inset 7px 7px 14px #a4a4a4, inset -7px -7px 14px #ffffff;
+    display: flex;
+    margin: 5%;
+}
+
+.StudentCard img {
+    border-radius: 10px;
+    max-width: 64px;
+    max-height: 64px;
+    margin: 5%;
+    flex: 1;
+}
+
+.StudentCard div {
+    flex: 2;
+
+    display: flex;
+    flex-direction: column;
+
+    justify-content: center;
+    text-align: center;
+
+    font-family: sans-serif;
+    font-size: 1rem;
+}
+
+.StudentCard strong {
+    /* Add any additional styles for the strong tag if needed */
+}
+
+.StudentCard p {
+
+}
