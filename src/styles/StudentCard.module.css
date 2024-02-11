@@ -3,9 +3,10 @@
 .StudentCard {
     border-radius: 30px;
     background: #ededed;
-    box-shadow: inset 7px 7px 14px #a4a4a4, inset -7px -7px 14px #ffffff;
     display: flex;
     margin: 5%;
+    align-self: stretch;
+    min-width: 256px;
 }
 
 .StudentCard img {
@@ -34,5 +35,5 @@
 }
 
 .StudentCard p {
-
+    margin: 0px;
 }
