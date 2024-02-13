@@ -1,0 +1,18 @@
+.StudentList {
+    border-radius: 24px;
+    background: #949494;
+    box-shadow: 15px 15px 30px #6f6f6f, -15px -15px 30px #b9b9b9;
+    font-family: Arial, sans-serif;
+    align-self: stretch;
+    min-width: 280px;
+}
+
+.StudentList > strong {
+    text-align: center;
+    color: green;
+    margin: 5%;
+}
+
+.StudentList div {
+    margin: 5px;
+}
