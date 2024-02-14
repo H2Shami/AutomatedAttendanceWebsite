@@ -1,6 +1,7 @@
 // components/Navbar.js
-import Link from 'next/link';
+import ActiveLink from './ActiveLink';
 import Image from 'next/image';
+import Link from 'next/link';
 import styles from '@/styles/Navbar.module.css'
 
 function Navbar() {
@@ -8,26 +9,18 @@ function Navbar() {
     <div className={styles.sidebar}>
       <nav className={styles.nav}>
         <ul>
-          <li className={styles.active}>
-            <Link href="/">
-              <p><i className="bi bi-calendar-event"></i>  Right Now</p>
-            </Link>
-          </li>
-          <li>
-            <Link href="/courses">
-              <p><i className="bi bi-hdd-stack"></i>  Courses</p>
-            </Link>
-          </li>
-          <li>
-            <Link href="/students">
-              <p><i className="bi bi-people"></i> Students</p>
-            </Link>
-          </li>
-          <li>
-            <Link href="/logout">
-              <p><i className="bi bi-box-arrow-right"></i> Logout</p>
-            </Link>
-          </li>
+          <ActiveLink href="/rightnow">
+            <i className="bi bi-calendar-event"></i>  Right Now
+          </ActiveLink>
+          <ActiveLink href="/courses">
+            <i className="bi bi-hdd-stack"></i>  Courses
+          </ActiveLink>
+          <ActiveLink href="/students">
+              <i className="bi bi-people"></i> Students
+          </ActiveLink>
+          <ActiveLink href="/">
+            <i className="bi bi-box-arrow-right"></i> Logout
+          </ActiveLink>
         </ul>
       </nav>
     </div>
