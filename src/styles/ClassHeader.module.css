@@ -1,0 +1,34 @@
+.class-header {
+  display: flex;
+  flex-direction: row;
+  column-gap: 10px;
+  border-radius: 15px;
+  padding: 5px;
+  width: min(800px, 100%);
+}
+
+.class-header__photo {
+  height: 70px;
+  width: 70px;
+  object-fit: cover;
+  border-radius: 15px;
+}
+
+.class-header__content {
+  color: white;
+  display: flex;
+  flex-direction: column;
+  font-family: sans-serif;
+}
+
+.class-header__content__title {
+  font-weight: bold;
+  font-size: 1.3rem;
+  margin: 0;
+}
+
+.class-header__content__date-today {
+  display: block;
+  margin-top: 8px;
+  font-weight: lighter;
+}

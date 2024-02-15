@@ -1,0 +1,18 @@
+.right-now-container {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: row;
+  column-gap: 10px;
+}
+
+.right-now-container__content {
+  display: flex;
+  flex-direction: column;
+  row-gap: 10px;
+}
+
+.right-now-container__content__student-lists {
+  display: flex;
+  flex-direction: row;
+  column-gap: 10px;
+}
