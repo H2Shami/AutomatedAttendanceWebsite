@@ -1,6 +1,6 @@
 import Navbar from "@/components/Navbar"
 
-export default function Rightnow() {
+export default function Students() {
     return(
         <>
             <Navbar />
