@@ -2,6 +2,7 @@ import Navbar from "@/components/Navbar";
 import ClassHeader from "./RightNow/ClassHeader/ClassHeader";
 import StudentList from "@/components/StudentList";
 import styles from "@/styles/RightNow.module.css";
+import {PrismaClient} from "@prisma/client";
 
 let students = [
   {
@@ -36,7 +37,8 @@ let students = [
   },
 ];
 
-export default function Rightnow() {
+export default function Rightnow({studentTable}) {
+  console.log(JSON.stringify(studentTable, null, 2));
   return (
     <>
       <div className={styles["right-now-container"]}>
@@ -53,4 +55,17 @@ export default function Rightnow() {
       </div>
     </>
   );
+}
+
+export async function getServerSideProps() {
+  const prisma = new PrismaClient();
+
+  //Grab all students
+  const studentResponse = await prisma.students.findMany();
+
+  return {
+    props: {
+      studentTable: studentResponse
+    },
+  };
 }

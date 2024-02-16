@@ -1,0 +1,56 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model attendance {
+  attendanceid    Int       @id @default(autoincrement())
+  classid         Int?
+  studentid       Int?
+  entry_timestamp DateTime? @db.Timestamp(6)
+  classes         classes?  @relation(fields: [classid], references: [classid], onDelete: NoAction, onUpdate: NoAction)
+  students        students? @relation(fields: [studentid], references: [studentid], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model classes {
+  classid     Int           @id
+  class_name  String        @db.VarChar(100)
+  professorid Int?
+  semester    String?       @db.VarChar(20)
+  year        Int?
+  days        String?       @db.VarChar(20)
+  start_time  DateTime?     @db.Time(6)
+  attendance  attendance[]
+  professors  professors?   @relation(fields: [professorid], references: [professorid], onDelete: NoAction, onUpdate: NoAction)
+  enrollments enrollments[]
+}
+
+model enrollments {
+  studentid Int
+  classid   Int
+  classes   classes  @relation(fields: [classid], references: [classid], onDelete: NoAction, onUpdate: NoAction)
+  students  students @relation(fields: [studentid], references: [studentid], onDelete: NoAction, onUpdate: NoAction)
+
+  @@id([studentid, classid])
+}
+
+model professors {
+  professorid Int       @id
+  first_name  String    @db.VarChar(50)
+  last_name   String    @db.VarChar(50)
+  email       String?   @db.VarChar(100)
+  classes     classes[]
+}
+
+model students {
+  studentid   Int           @id
+  first_name  String        @db.VarChar(50)
+  last_name   String        @db.VarChar(50)
+  email       String?       @db.VarChar(100)
+  attendance  attendance[]
+  enrollments enrollments[]
+}
