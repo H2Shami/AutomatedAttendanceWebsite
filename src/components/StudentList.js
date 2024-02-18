@@ -3,7 +3,6 @@ import styles from "@/styles/StudentList.module.css";
 import StudentCard from "@/components/StudentCard";
 
 const StudentList = ({ label, students }) => {
-  console.log(label);
   return (
     <div className={styles.StudentList}>
       <strong>
@@ -19,7 +18,7 @@ const StudentList = ({ label, students }) => {
       </strong>
       <div>
         {students?.map((item) => (
-          <StudentCard imgPath={item.path} name={item.name} info={item.info} />
+          <StudentCard key={item.name} imgPath={item.path} name={item.name} info={item.info} />
         ))}
       </div>
     </div>
