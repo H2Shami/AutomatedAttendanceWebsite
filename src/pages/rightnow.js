@@ -1,5 +1,5 @@
 import Navbar from "@/components/Navbar";
-import ClassHeader from "./RightNow/ClassHeader/ClassHeader";
+import ClassHeader from "@/components/ClassHeader";
 import StudentList from "@/components/StudentList";
 import styles from "@/styles/RightNow.module.css";
 import {PrismaClient} from "@prisma/client";
@@ -7,7 +7,7 @@ import {PrismaClient} from "@prisma/client";
 let students = [
   {
     path: "/favicon.ico",
-    name: "Alice Johnson",
+    name: "Alyssa Johnson",
     info: "Arrived 11:50pm",
   },
   {
@@ -27,12 +27,12 @@ let students = [
   },
   {
     path: "/favicon.ico",
-    name: "Bob Smith",
+    name: "Bob Smithy",
     info: "Arrived 11:50pm",
   },
   {
     path: "/favicon.ico",
-    name: "Eva Lee",
+    name: "Eva Leenie",
     info: "Arrived 11:50pm",
   },
 ];
