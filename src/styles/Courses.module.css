@@ -1,0 +1,42 @@
+.courses-container {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: row;
+  column-gap: 10px;
+}
+
+.courses-container__content {
+  display: flex;
+  width: 100%;
+  margin-left: 5px;
+  grid-gap: 15px;
+  /* grid */
+}
+
+/* Course container */
+
+.course-container {
+  font-family: sans-serif;
+  color: white;
+  width: 300px;
+  height: 300px;
+  border-radius: 8px;
+  padding: 8px;
+  position: relative;
+}
+
+.course-container__photo {
+  width: 100%;
+  border-radius: 10px;
+}
+
+.course-container__meeting-info {
+  position: absolute;
+  bottom: 0;
+  margin-bottom: 8px;
+  font-weight: lighter;
+}
+
+.course-container__title {
+  font-size: 18px;
+}
