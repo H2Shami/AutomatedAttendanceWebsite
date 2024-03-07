@@ -1,5 +1,6 @@
 import Navbar from "@/components/Navbar"
 import StudentList from "@/components/StudentList"
+import styles from "@/styles/Students.module.css"
 
 let students = [
     {
@@ -30,9 +31,9 @@ let students = [
 
 export default function Students() {
     return(
-        <>
+        <div className={styles.mainLayout}>
             <Navbar />
             <StudentList students={students} label="Students" />
-        </>
+        </div>
     )
 }
