@@ -15,6 +15,20 @@ poetry shell
 poetry install --no-root
 ```
 
+## Running the server
+
+The server will allow you to call the endpoints and interact with the database
+
+```
+python3 src/pages/api/server.py
+```
+
+You can test the server by routing to the /docs# of the created http site
+
+```
+http://localhost:8000/docs#/
+```
+
 ## Getting Started
 
 First, run the development server:
