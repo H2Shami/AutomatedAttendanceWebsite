@@ -7,8 +7,8 @@ const StudentCard = ({ imgPath, name, email, studentId }) => {
       <img src={imgPath} alt={"Student Thumbnail"} />
       <div>
         <p>{name}</p>
-        <p>{email}</p>
-        <p>{studentId}</p>
+        {email && <p>{email}</p>}
+        {studentId && <p>{studentId}</p>}
       </div>
     </div>
   );

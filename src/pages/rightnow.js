@@ -4,40 +4,14 @@ import StudentList from "@/components/StudentList";
 import styles from "@/styles/RightNow.module.css";
 import {PrismaClient} from "@prisma/client";
 
-let students = [
-  {
-    path: "/favicon.ico",
-    name: "Alyssa Johnson",
-    info: "Arrived 11:50pm",
-  },
-  {
-    path: "/favicon.ico",
-    name: "Bob Smith",
-    info: "Arrived 11:50pm",
-  },
-  {
-    path: "/favicon.ico",
-    name: "Eva Lee",
-    info: "Arrived 11:50pm",
-  },
-  {
-    path: "/favicon.ico",
-    name: "Alice Johnson",
-    info: "Arrived 11:50pm",
-  },
-  {
-    path: "/favicon.ico",
-    name: "Bob Smithy",
-    info: "Arrived 11:50pm",
-  },
-  {
-    path: "/favicon.ico",
-    name: "Eva Leenie",
-    info: "Arrived 11:50pm",
-  },
-];
-
 export default function Rightnow({studentTable}) {
+  
+  const studentListData = studentTable.map(student => ({
+    first_name: student.first_name,
+    last_name: student.last_name,
+    imgPath: student.imgPath,
+  }));
+
   console.log(JSON.stringify(studentTable, null, 2));
   return (
     <>
@@ -48,8 +22,8 @@ export default function Rightnow({studentTable}) {
           <div
             className={styles["right-now-container__content__student-lists"]}
           >
-            <StudentList students={students} label="Present" />
-            <StudentList students={students} label="Absent" />
+            <StudentList students={studentListData} label="Present" />
+            <StudentList students={studentListData} label="Absent" />
           </div>
         </div>
       </div>
