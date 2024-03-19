@@ -1,5 +1,20 @@
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
+### Local
+
+1. Ensure Poetry is installed: https://python-poetry.org/docs/#installing-with-the-official-installer
+
+```
+curl -sSL https://install.python-poetry.org | python3 -
+```
+
+2. Activate poetry and install dependencies
+
+```
+poetry shell
+poetry install --no-root
+```
+
 ## Getting Started
 
 First, run the development server:
