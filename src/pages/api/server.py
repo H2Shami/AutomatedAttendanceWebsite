@@ -80,9 +80,9 @@ async def add_photo(student_id: int, file: UploadFile):
         aws_session_token=SESSION_TOKEN,
     )
     bucket = s3.Bucket(S3_BUCKET_NAME)
-    bucket.upload_fileobj(file.file, file.filename, ExtraArgs={"ACL": "public-read"})
+    bucket.upload_fileobj(file.file, str(student_id), ExtraArgs={"ACL": "public-read"})
 
-    uploaded_file_url = f"https://{S3_BUCKET_NAME}.s3.amazonaws.com/{file.filename}"
+    uploaded_file_url = f"https://{S3_BUCKET_NAME}.s3.amazonaws.com/{student_id}"
 
     # Store URL in db
     conn = psycopg2.connect(
