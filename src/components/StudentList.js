@@ -18,7 +18,8 @@ const StudentList = ({ label, students }) => {
       </strong>
       <div>
         {students?.map((item) => (
-          <StudentCard key={item.name} imgPath={item.path} name={item.name} info={item.info} />
+          <StudentCard key={item.name} imgPath={item.photo_url} name={item.first_name + " " + item.last_name} 
+          email={item.email} studentId={item.studentid} />
         ))}
       </div>
     </div>
