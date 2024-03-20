@@ -2,6 +2,8 @@ import Navbar from "@/components/Navbar";
 import ClassHeader from "@/components/ClassHeader";
 import StudentList from "@/components/StudentList";
 import styles from "@/styles/RightNow.module.css";
+import { PrismaClient } from "@prisma/client";
+import { useEffect, useState } from "react";
 
 let students = [
   {
@@ -36,6 +38,16 @@ let students = [
   },
 ];
 
+export default function Rightnow({ studentTable }) {
+  // const [data, setData] = useState(null);
+
+  // useEffect(() => {
+  //     fetch('/api/students')
+  //         .then((response) => response.json())
+  //         .then((data) => setData(data));
+  // }, []);
+
+  // console.log(data)
 
   console.log(JSON.stringify(studentTable, null, 2));
   return (
@@ -60,7 +72,7 @@ export async function getServerSideProps() {
   const prisma = new PrismaClient();
 
   //Grab all students
-  // const studentResponse = await prisma.students.findMany();
+  const studentResponse = await prisma.students.findMany();
 
   return {
     props: {
