@@ -72,6 +72,7 @@ export async function getServerSideProps() {
   const prisma = new PrismaClient();
 
   //Grab all students
+  // ? Do we filter this so we retrieve only students for this class and the date?
   const studentResponse = await prisma.students.findMany();
 
   return {
