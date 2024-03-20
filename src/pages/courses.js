@@ -1,5 +1,7 @@
 import Navbar from "@/components/Navbar";
 import styles from "@/styles/Courses.module.css";
+import DividerSvg from "../icons/Divider.jsx";
+import { FaPlus } from "react-icons/fa";
 import { arrayOf } from "prop-types";
 
 export default function Courses() {
@@ -7,23 +9,57 @@ export default function Courses() {
     <>
       <div className={styles["courses-container"]}>
         <Navbar />
-        <div className={styles["courses-container__content"]}>
-          <Course
-            color="#3492cd"
-            classCode="CS146"
-            section="02"
-            className="Data Structures and Algorithms"
-            meetingDay="Tues"
-            meetingTime="3:00-4:00"
-          />
-          <Course
-            color="#f4b030"
-            classCode="CS146"
-            section="02"
-            className="Data Structures and Algorithms"
-            meetingDay="Tues"
-            meetingTime="3:00-4:00"
-          />
+        <div>
+          {" "}
+          <div className={styles["top-container"]}>
+            <span className={styles["top-container__title"]}>Your Courses</span>
+            <DividerSvg />
+            <button className={styles["add-class-button"]}>
+              Add a class <FaPlus color={"#202020"} size={17} />{" "}
+            </button>
+          </div>
+          <div className={styles["courses-container__content"]}>
+            <Course
+              color="#3492cd"
+              classCode="CS146"
+              section="02"
+              className="Data Structures and Algorithms"
+              meetingDay="Tues"
+              meetingTime="3:00-4:00"
+            />
+            <Course
+              color="#f4b030"
+              classCode="CS146"
+              section="02"
+              className="Data Structures and Algorithms"
+              meetingDay="Tues"
+              meetingTime="3:00-4:00"
+            />
+            <Course
+              color="#f4b030"
+              classCode="CS146"
+              section="02"
+              className="Data Structures and Algorithms"
+              meetingDay="Tues"
+              meetingTime="3:00-4:00"
+            />
+            <Course
+              color="#f4b030"
+              classCode="CS146"
+              section="02"
+              className="Data Structures and Algorithms"
+              meetingDay="Tues"
+              meetingTime="3:00-4:00"
+            />
+            <Course
+              color="#f4b030"
+              classCode="CS146"
+              section="02"
+              className="Data Structures and Algorithms"
+              meetingDay="Tues"
+              meetingTime="3:00-4:00"
+            />
+          </div>
         </div>
       </div>
     </>
