@@ -1,0 +1,80 @@
+.courses-container {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: row;
+  column-gap: 10px;
+}
+
+.courses-container__content {
+  display: inline-grid;
+  margin-left: 10px;
+  grid-gap: 15px;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: max-content;
+  /* grid */
+}
+
+/* Course container */
+
+.course-container {
+  font-family: sans-serif;
+  color: white;
+  width: 300px;
+  height: 300px;
+  border-radius: 8px;
+  padding: 8px;
+  position: relative;
+}
+
+.course-container__photo {
+  width: 100%;
+  border-radius: 10px;
+}
+
+.course-container__meeting-info {
+  position: absolute;
+  bottom: 0;
+  margin-bottom: 8px;
+  font-weight: lighter;
+}
+
+.course-container__title {
+  font-size: 18px;
+}
+
+/* Top container */
+
+.top-container {
+  display: flex;
+  column-gap: 20px;
+  font-family: sans-serif;
+  margin-bottom: 25px;
+  margin-left: 10px;
+}
+
+.top-container__divider {
+  display: block;
+  background-color: red;
+  color: blue;
+}
+
+.top-container__title {
+  font-size: 38px;
+  font-weight: bolder;
+  color: #202020;
+}
+.add-class-button {
+  justify-items: center;
+  align-items: center;
+  outline: none;
+  border: none;
+  border-radius: 10px;
+  padding: 10px;
+  font-weight: 800;
+  font-size: 16px;
+  color: #202020;
+  background-color: #dddddd;
+  filter: drop-shadow(0px 0px 2px #d7d7d7);
+  display: flex;
+  column-gap: 5px;
+}
