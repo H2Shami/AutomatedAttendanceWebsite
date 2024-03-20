@@ -2,9 +2,10 @@
   background-color: #4596f4;
   width: 200px;
   height: 100vh;
-  padding: 20px;
+  padding: 0px;
   box-sizing: border-box;
-  border-radius: 10px;
+  border-radius: 0px 30px 30px 0px;
+  letter-spacing: 0.9px;
 }
 
 .logo {
@@ -14,22 +15,32 @@
 
 .nav ul {
   list-style: none;
-  padding: 0;
+  margin-top: 30px;
+  padding: 0px;
 }
 
 .nav li {
-  margin-bottom: 10px;
+  padding-bottom: 0px;
 }
 
 .nav li a {
   text-decoration: none;
-  color: #d9d9d9;
-  font-family: Arial, Helvetica, sans-serif;
+  color: #ffffff;
+  font-family: Helvetica, sans-serif;
   font-size: 1.2em;
+  font-weight: 100;
+  padding: 0px 0px 0px 15px;
+}
+
+.nav li a {
+  display: flex;
+  column-gap: 20px;
+  padding-top: 15px;
+  padding-bottom: 15px;
 }
 
 .nav li.active a,
 .nav li a:hover {
-  color: #f0f0f0;
-  font-weight: bold;
+  color: #ffffff;
+  background-color: rgb(51, 120, 204);
 }
