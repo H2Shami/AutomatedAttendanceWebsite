@@ -2,7 +2,6 @@ import Navbar from "@/components/Navbar";
 import ClassHeader from "@/components/ClassHeader";
 import StudentList from "@/components/StudentList";
 import styles from "@/styles/RightNow.module.css";
-import { PrismaClient } from "@prisma/client";
 
 let students = [
   {
@@ -37,7 +36,7 @@ let students = [
   },
 ];
 
-export default function Rightnow({ studentTable }) {
+
   console.log(JSON.stringify(studentTable, null, 2));
   return (
     <>
@@ -48,8 +47,8 @@ export default function Rightnow({ studentTable }) {
           <div
             className={styles["right-now-container__content__student-lists"]}
           >
-            <StudentList students={students} label="Present" />
-            <StudentList students={students} label="Absent" />
+            <StudentList students={studentTable} label="Present" />
+            <StudentList students={studentTable} label="Absent" />
           </div>
         </div>
       </div>
