@@ -76,7 +76,7 @@ export async function getServerSideProps() {
 
   return {
     props: {
-      // studentTable: studentResponse,
+      studentTable: studentResponse,
     },
   };
 }
