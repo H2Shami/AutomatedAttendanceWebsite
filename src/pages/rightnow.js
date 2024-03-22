@@ -2,7 +2,10 @@ import Navbar from "@/components/Navbar";
 import ClassHeader from "@/components/ClassHeader";
 import StudentList from "@/components/StudentList";
 import styles from "@/styles/RightNow.module.css";
-import {PrismaClient} from "@prisma/client";
+import { PrismaClient } from "@prisma/client";
+import { useEffect, useState } from "react";
+
+const prisma = new PrismaClient();
 
 export default function Rightnow({studentTable}) {
   
@@ -32,14 +35,13 @@ export default function Rightnow({studentTable}) {
 }
 
 export async function getServerSideProps() {
-  const prisma = new PrismaClient();
-
   //Grab all students
+  // ? Do we filter this so we retrieve only students for this class and the date?
   const studentResponse = await prisma.students.findMany();
 
   return {
     props: {
-      studentTable: studentResponse
+      studentTable: studentResponse,
     },
   };
 }
