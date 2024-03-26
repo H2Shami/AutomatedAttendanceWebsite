@@ -123,6 +123,10 @@ async def add_attendance_record(student_id: int, class_id: int, timestamp):
     conn.close()
     print("Attendance Record insertion successful")
 
+    # Signal that a DB re-check is required
+    return "Check DB"
+
+
 
 if __name__ == "__main__":
     uvicorn.run(app, host="localhost", port=8000, reload=False)
