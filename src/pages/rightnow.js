@@ -70,7 +70,7 @@ export default function Rightnow({ studentTable }) {
       const link = new URL(
         `http://localhost:3000/api/getAttendanceForMeeting?classid=${currentClass.classid}&meetingDate=${currentClass.meetingDate}&meetingStart=${currentClass.meetingStart}&meetingEnd=${currentClass.meetingEnd}`
       );
-      fetch(link)
+      const result = fetch(link)
         .then((resp) => resp.json())
         .then((record) => {
           setAttendance(record);
@@ -81,7 +81,13 @@ export default function Rightnow({ studentTable }) {
     };
 
     // call expression
-    // const test = getAttendance();
+    getAttendance();
+
+    // Set interval to call fetchData every 5 seconds
+    const intervalId = setInterval(getAttendance, 8000);
+
+    // Clear interval when component unmounts
+    return () => clearInterval(intervalId);
 
     /* -=-=-=-=- Below is for dynamic updates (don't remove)-=-=-=--=*/
     // const eventSource = new EventSource(
@@ -122,6 +128,15 @@ export default function Rightnow({ studentTable }) {
     );
   }, [attendance]);
 
+  /* -=-=-=-=-=- Refresh components -- Bottom-up  -=-=-=-=-=-=*/
+  /* UseEffect subscribes to changes in "AttendanceRecords" */
+  /* AttendanceRecords is the STATE of the students who are present for this current class meeting and is fetched from the DB with a query */
+  /* The DB fetch is handled by a server-state management tool like react-query, which can be used to initialize refetches*/
+  /* React-query initializes a refetch when we receive a signal from the server, tellling us to update the DB*/
+  /* The signal from the server is sent whenever Nano pings attendance insertion endpoint*/
+
+  // console.log(JSON.stringify(studentTable, null, 2));
+  // todo: split student table into students who are here and aren't
   return (
     <>
       <div className={styles["right-now-container"]}>
@@ -152,7 +167,6 @@ export async function getServerSideProps() {
     studentResponse[index] = studentInfo.students;
   });
 
-  console.log(studentResponse);
   return {
     props: {
       studentTable: studentResponse,
