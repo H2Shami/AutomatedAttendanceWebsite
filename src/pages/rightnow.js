@@ -7,6 +7,14 @@ import { useEffect, useState } from "react";
 
 const prisma = new PrismaClient();
 
+// Mock data
+let currentClass = {
+  classid: 2222,
+  meetingDate: "03/24/2024",
+  meetingStart: "9:00",
+  meetingEnd: "10:15",
+};
+
 let students = [
   {
     path: "/favicon.ico",
@@ -40,18 +48,95 @@ let students = [
   },
 ];
 
+// const attendanceRecords = [{ studentid: 987987987 }, { studentid: 123123123 }];
+
+// async function getAttendance() {
+//   const link = new URL(
+//     `http://localhost:3000/api/getAttendanceForMeeting?classid=${currentClass.classid}&meetingDate=${currentClass.meetingDate}&meetingStart=${currentClass.meetingStart}&meetingEnd=${currentClass.meetingEnd}`
+//   );
+//   const attendance = await fetch(link);
+//   return attendance;
+// }
+
 export default function Rightnow({ studentTable }) {
-  // const [data, setData] = useState(null);
+  const [attendance, setAttendance] = useState([]);
+  const [present, setPresent] = useState([]);
+  const [absent, setAbsent] = useState(studentTable);
 
-  // useEffect(() => {
-  //     fetch('/api/students')
-  //         .then((response) => response.json())
-  //         .then((data) => setData(data));
-  // }, []);
+  /* 1. Find new attendees*/
+  useEffect(() => {
+    // Immediately invoked function expression
+    const getAttendance = async () => {
+      const link = new URL(
+        `http://localhost:3000/api/getAttendanceForMeeting?classid=${currentClass.classid}&meetingDate=${currentClass.meetingDate}&meetingStart=${currentClass.meetingStart}&meetingEnd=${currentClass.meetingEnd}`
+      );
+      const result = fetch(link)
+        .then((resp) => resp.json())
+        .then((record) => {
+          setAttendance(record);
+        });
+      // result.then((result) => {
+      //   setAttendance(result);
+      // });
+    };
 
-  // console.log(data)
+    // call expression
+    getAttendance();
 
-  console.log(JSON.stringify(studentTable, null, 2));
+    // Set interval to call fetchData every 5 seconds
+    const intervalId = setInterval(getAttendance, 8000);
+
+    // Clear interval when component unmounts
+    return () => clearInterval(intervalId);
+
+    /* -=-=-=-=- Below is for dynamic updates (don't remove)-=-=-=--=*/
+    // const eventSource = new EventSource(
+    //   "http://localhost:8000/attendance_record"
+    // );
+
+    // eventSource.onmessage = (event) => {
+    //   // Start a refresh
+    //   console.log("event received");
+    //   // Query: All attendance records for this class_id WHERE the timestamp is for the current class_time and date
+
+    //   setPresent(
+    //     studentTable.filter((student) => {
+    //       return studentInList(student.student_id, attendanceRecords);
+    //     })
+    //   );
+    //   setAbsent(
+    //     studentTable.filter((student) => {
+    //       return !studentInList(student.student_id, attendanceRecords);
+    //     })
+    //   );
+    // };
+
+    // return () => eventSource.close();
+  }, []);
+
+  /* 2. Update the page if we find new attendees (i.e: when the above use effect is called)*/
+  useEffect(() => {
+    setPresent(
+      studentTable.filter((student) => {
+        return studentInList(student.studentid, attendance);
+      })
+    );
+    setAbsent(
+      studentTable.filter((student) => {
+        return !studentInList(student.studentid, attendance);
+      })
+    );
+  }, [attendance]);
+
+  /* -=-=-=-=-=- Refresh components -- Bottom-up  -=-=-=-=-=-=*/
+  /* UseEffect subscribes to changes in "AttendanceRecords" */
+  /* AttendanceRecords is the STATE of the students who are present for this current class meeting and is fetched from the DB with a query */
+  /* The DB fetch is handled by a server-state management tool like react-query, which can be used to initialize refetches*/
+  /* React-query initializes a refetch when we receive a signal from the server, tellling us to update the DB*/
+  /* The signal from the server is sent whenever Nano pings attendance insertion endpoint*/
+
+  // console.log(JSON.stringify(studentTable, null, 2));
+  // todo: split student table into students who are here and aren't
   return (
     <>
       <div className={styles["right-now-container"]}>
@@ -61,8 +146,8 @@ export default function Rightnow({ studentTable }) {
           <div
             className={styles["right-now-container__content__student-lists"]}
           >
-            <StudentList students={studentTable} label="Present" />
-            <StudentList students={studentTable} label="Absent" />
+            <StudentList students={present} label="Present" />
+            <StudentList students={absent} label="Absent" />
           </div>
         </div>
       </div>
@@ -71,13 +156,29 @@ export default function Rightnow({ studentTable }) {
 }
 
 export async function getServerSideProps() {
-  //Grab all students
-  // ? Do we filter this so we retrieve only students for this class and the date?
-  const studentResponse = await prisma.students.findMany();
+  // Grab all students for this class
+  const studentResponse = await prisma.enrollments.findMany({
+    where: { classid: currentClass.classid },
+    include: { students: true },
+  });
+
+  // Parse data to just get student info
+  studentResponse.forEach((studentInfo, index) => {
+    studentResponse[index] = studentInfo.students;
+  });
 
   return {
     props: {
       studentTable: studentResponse,
     },
   };
+}
+
+function studentInList(target_id, studentList) {
+  for (let i = 0; i < studentList.length; i++) {
+    if (studentList[i].studentid == target_id) {
+      return true;
+    }
+  }
+  return false;
 }
