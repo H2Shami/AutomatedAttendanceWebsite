@@ -16,7 +16,7 @@
     "production:build": "npx prisma generate && npx prisma migrate deploy && next build"
   },
   "dependencies": {
-    "@prisma/client": "5.9.1",
+    "@prisma/client": "^5.9.1",
     "bootstrap-icons": "^1.11.3",
     "next": "^14.1.4",
     "prop-types": "^15.8.1",
