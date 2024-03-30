@@ -104,6 +104,19 @@ export default function Rightnow({ studentTable }) {
 
   // console.log(JSON.stringify(studentTable, null, 2));
   // todo: split student table into students who are here and aren't
+
+  const presentStudents = present.map(student => ({
+    first_name: student.first_name,
+    last_name: student.last_name,
+    photo_url: student.photo_url,
+  }));
+
+  const absentStudents = absent.map(student => ({
+    first_name: student.first_name,
+    last_name: student.last_name,
+    photo_url: student.photo_url,
+  }));
+  
   return (
     <>
       <div className={styles["right-now-container"]}>
@@ -113,8 +126,8 @@ export default function Rightnow({ studentTable }) {
           <div
             className={styles["right-now-container__content__student-lists"]}
           >
-            <StudentList students={present} label="Present" />
-            <StudentList students={absent} label="Absent" />
+            <StudentList students={presentStudents} label="Present" />
+            <StudentList students={absentStudents} label="Absent" />
           </div>
         </div>
       </div>
