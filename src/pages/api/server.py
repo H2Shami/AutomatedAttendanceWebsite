@@ -12,6 +12,9 @@ import uvicorn
 from fastapi import FastAPI, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 
+import asyncio
+from sse_starlette.sse import EventSourceResponse
+
 load_dotenv()
 S3_BUCKET_NAME = os.getenv("AWS_BUCKET_NAME")
 ACCESS_KEY = os.getenv("AWS_ACCESS_KEY")
@@ -35,6 +38,7 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+app.state.staleSignalSent = True
 
 
 # test endpoint
@@ -124,8 +128,22 @@ async def add_attendance_record(student_id: int, class_id: int, timestamp):
     print("Attendance Record insertion successful")
 
     # Signal that a DB re-check is required
-    return "Check DB"
+    app.state.staleSignalSent = False
 
+# A function that gets caleld every 0.9s
+async def generator():
+        while True:
+            await asyncio.sleep(0.9)
+            if not app.state.staleSignalSent:
+                yield dict(data="Check DB") # Sends a signal to all subscribers
+                app.state.staleSignalSent = True
+        
+
+# Endpoint that the front-end subscribes to
+@app.get("/check_db", status_code=201)
+async def check_db():
+    print("Check_db endpoint: Telling all subscribers to check db")
+    return EventSourceResponse(generator())
 
 
 if __name__ == "__main__":
