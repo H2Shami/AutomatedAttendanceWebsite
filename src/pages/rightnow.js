@@ -15,38 +15,15 @@ let currentClass = {
   meetingEnd: "10:15",
 };
 
-let students = [
-  {
-    path: "/favicon.ico",
-    name: "Alyssa Johnson",
-    info: "Arrived 11:50pm",
-  },
-  {
-    path: "/favicon.ico",
-    name: "Bob Smith",
-    info: "Arrived 11:50pm",
-  },
-  {
-    path: "/favicon.ico",
-    name: "Eva Lee",
-    info: "Arrived 11:50pm",
-  },
-  {
-    path: "/favicon.ico",
-    name: "Alice Johnson",
-    info: "Arrived 11:50pm",
-  },
-  {
-    path: "/favicon.ico",
-    name: "Bob Smithy",
-    info: "Arrived 11:50pm",
-  },
-  {
-    path: "/favicon.ico",
-    name: "Eva Leenie",
-    info: "Arrived 11:50pm",
-  },
-];
+// const attendanceRecords = [{ studentid: 987987987 }, { studentid: 123123123 }];
+
+// async function getAttendance() {
+//   const link = new URL(
+//     `http://localhost:3000/api/getAttendanceForMeeting?classid=${currentClass.classid}&meetingDate=${currentClass.meetingDate}&meetingStart=${currentClass.meetingStart}&meetingEnd=${currentClass.meetingEnd}`
+//   );
+//   const attendance = await fetch(link);
+//   return attendance;
+// }
 
 export default function Rightnow({ studentTable }) {
   const [attendance, setAttendance] = useState([]);
@@ -102,6 +79,28 @@ export default function Rightnow({ studentTable }) {
     );
   }, [attendance]);
 
+  /* -=-=-=-=-=- Refresh components -- Bottom-up  -=-=-=-=-=-=*/
+  /* UseEffect subscribes to changes in "AttendanceRecords" */
+  /* AttendanceRecords is the STATE of the students who are present for this current class meeting and is fetched from the DB with a query */
+  /* The DB fetch is handled by a server-state management tool like react-query, which can be used to initialize refetches*/
+  /* React-query initializes a refetch when we receive a signal from the server, tellling us to update the DB*/
+  /* The signal from the server is sent whenever Nano pings attendance insertion endpoint*/
+
+  // console.log(JSON.stringify(studentTable, null, 2));
+  // todo: split student table into students who are here and aren't
+
+  const presentStudents = present.map(student => ({
+    first_name: student.first_name,
+    last_name: student.last_name,
+    photo_url: student.photo_url,
+  }));
+
+  const absentStudents = absent.map(student => ({
+    first_name: student.first_name,
+    last_name: student.last_name,
+    photo_url: student.photo_url,
+  }));
+  
   return (
     <>
       <div className={styles["right-now-container"]}>
@@ -111,8 +110,8 @@ export default function Rightnow({ studentTable }) {
           <div
             className={styles["right-now-container__content__student-lists"]}
           >
-            <StudentList students={present} label="Present" />
-            <StudentList students={absent} label="Absent" />
+            <StudentList students={presentStudents} label="Present" />
+            <StudentList students={absentStudents} label="Absent" />
           </div>
         </div>
       </div>
