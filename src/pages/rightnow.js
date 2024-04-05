@@ -42,43 +42,27 @@ export default function Rightnow({ studentTable }) {
         .then((record) => {
           setAttendance(record);
         });
-      // result.then((result) => {
-      //   setAttendance(result);
-      // });
     };
 
     // call expression
     getAttendance();
 
-    // Set interval to call fetchData every 5 seconds
-    const intervalId = setInterval(getAttendance, 8000);
-
-    // Clear interval when component unmounts
-    return () => clearInterval(intervalId);
-
     /* -=-=-=-=- Below is for dynamic updates (don't remove)-=-=-=--=*/
-    // const eventSource = new EventSource(
-    //   "http://localhost:8000/attendance_record"
-    // );
+    const eventSource = new EventSource("http://localhost:8000/check_db");
 
-    // eventSource.onmessage = (event) => {
-    //   // Start a refresh
-    //   console.log("event received");
-    //   // Query: All attendance records for this class_id WHERE the timestamp is for the current class_time and date
+    eventSource.onmessage = (event) => {
+      // Start a refresh
+      console.log("event received");
+      // Query: All attendance records for this class_id WHERE the timestamp is for the current class_time and date
+      getAttendance();
+    };
 
-    //   setPresent(
-    //     studentTable.filter((student) => {
-    //       return studentInList(student.student_id, attendanceRecords);
-    //     })
-    //   );
-    //   setAbsent(
-    //     studentTable.filter((student) => {
-    //       return !studentInList(student.student_id, attendanceRecords);
-    //     })
-    //   );
-    // };
+    eventSource.onerror = () => {
+      console.log("Event source error");
+      eventSource.close();
+    };
 
-    // return () => eventSource.close();
+    return () => eventSource.close();
   }, []);
 
   /* 2. Update the page if we find new attendees (i.e: when the above use effect is called)*/
