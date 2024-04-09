@@ -130,9 +130,8 @@ async def add_attendance_record(student_id: int, class_id: int, timestamp):
 
     # Signal that a DB re-check is required
     app.state.staleSignalSent = False
-
-@app.delete("/delete_all_attendance_records")
-async def delete_all_attendance_records():
+@app.delete("/delete_attendance_records_by_class")
+async def delete_attendance_records_by_class(class_id: int):
     conn = psycopg2.connect(
         database=os.getenv("PGDATABASE"),
         user=os.getenv("PGUSER"),
@@ -142,11 +141,11 @@ async def delete_all_attendance_records():
     )
 
     cur = conn.cursor()
-    cur.execute("DELETE FROM attendance;")
+    cur.execute(f"DELETE FROM attendance WHERE classid = {class_id};")
     conn.commit()
     cur.close()
     conn.close()
-    print("All attendance records deleted successfully")
+    print(f"All attendance records for class {class_id} deleted successfully")
 
     # Signal that a DB re-check is required
     app.state.staleSignalSent = False
