@@ -28,6 +28,7 @@ class StudentModel(BaseModel):
     first_name: str
     last_name: str
     email: str
+    photo_url: str
 
 
 app = FastAPI(debug=True)
@@ -66,7 +67,7 @@ async def get_all_students():
     for row in rows:
         formatted_students.append(
             StudentModel(
-                studentid=row[0], first_name=row[1], last_name=row[2], email=row[3]
+                studentid=row[0], first_name=row[1], last_name=row[2], email=row[3], photo_url=row[4]
             )
         )
 
@@ -126,6 +127,26 @@ async def add_attendance_record(student_id: int, class_id: int, timestamp):
     cur.close()
     conn.close()
     print("Attendance Record insertion successful")
+
+    # Signal that a DB re-check is required
+    app.state.staleSignalSent = False
+
+@app.delete("/delete_all_attendance_records")
+async def delete_all_attendance_records():
+    conn = psycopg2.connect(
+        database=os.getenv("PGDATABASE"),
+        user=os.getenv("PGUSER"),
+        password=os.getenv("PGPASSWORD"),
+        host=os.getenv("PGHOST"),
+        port=os.getenv("PGPORT"),
+    )
+
+    cur = conn.cursor()
+    cur.execute("DELETE FROM attendance;")
+    conn.commit()
+    cur.close()
+    conn.close()
+    print("All attendance records deleted successfully")
 
     # Signal that a DB re-check is required
     app.state.staleSignalSent = False
