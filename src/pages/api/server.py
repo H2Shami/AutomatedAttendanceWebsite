@@ -130,6 +130,8 @@ async def add_attendance_record(student_id: int, class_id: int, timestamp):
 
     # Signal that a DB re-check is required
     app.state.staleSignalSent = False
+
+
 @app.delete("/delete_attendance_records_by_class")
 async def delete_attendance_records_by_class(class_id: int):
     conn = psycopg2.connect(
@@ -149,6 +151,7 @@ async def delete_attendance_records_by_class(class_id: int):
 
     # Signal that a DB re-check is required
     app.state.staleSignalSent = False
+
 
 # A function that gets caleld every 0.9s
 async def generator():
