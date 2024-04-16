@@ -1,8 +1,7 @@
 .sidebar {
   background-color: #4596f4;
-  width: 200px;
+  min-width: 200px;
   height: 100vh;
-  padding: 0px;
   box-sizing: border-box;
   border-radius: 0px 30px 30px 0px;
   letter-spacing: 0.9px;
@@ -29,7 +28,7 @@
   font-family: Helvetica, sans-serif;
   font-size: 1.2em;
   font-weight: 100;
-  padding: 0px 0px 0px 15px;
+  padding: 0px 15px 0px 15px;
 }
 
 .nav li a {
