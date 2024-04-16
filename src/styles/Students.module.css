@@ -1,3 +1,6 @@
 .mainLayout {
-    display: flex;
-  }
+  display: flex;
+  position: absolute;
+  left: 0px;
+  top: 18px;
+}
