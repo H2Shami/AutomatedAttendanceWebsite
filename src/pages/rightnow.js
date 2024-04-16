@@ -7,23 +7,45 @@ import { useEffect, useState } from "react";
 
 const prisma = new PrismaClient();
 
-// Mock data
+//-=-=-=-=-=-=  Demo date mock data -=-=-=-=-=-=-=
+
+var rightNow = new Date(); // Date is NOT based on any pulled class data
+var hours = rightNow.getHours(); // Pull hours metric only to avoid refresh errors
+
 let currentClass = {
   classid: 2222,
-  meetingDate: "03/24/2024",
-  meetingStart: "9:00",
-  meetingEnd: "10:15",
+  classTitle: "CMPE155 - 02 Java Programming",
+  meetingDate: rightNow.toLocaleDateString(),
+  meetingStart: convertToAMPM(hours), // The class time produced is the current_hour -> current_hour + 2 (eg: 5:00pm - 7:00pm)
+  meetingEnd: convertToAMPM(hours + 2),
+  day: convertToWeekday(rightNow.getDay()),
 };
 
-// const attendanceRecords = [{ studentid: 987987987 }, { studentid: 123123123 }];
-
-// async function getAttendance() {
-//   const link = new URL(
-//     `http://localhost:3000/api/getAttendanceForMeeting?classid=${currentClass.classid}&meetingDate=${currentClass.meetingDate}&meetingStart=${currentClass.meetingStart}&meetingEnd=${currentClass.meetingEnd}`
-//   );
-//   const attendance = await fetch(link);
-//   return attendance;
-// }
+function convertToWeekday(num) {
+  const weekday = [
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+  ];
+  return weekday[num];
+}
+function convertToAMPM(hours) {
+  var timeValue = hours;
+  if (hours > 0 && hours <= 12) {
+    timeValue = "" + hours;
+  } else if (hours > 12) {
+    timeValue = "" + (hours - 12);
+  } else if (hours == 0) {
+    timeValue = "12";
+  }
+  timeValue += ":00";
+  timeValue += hours >= 12 ? " PM" : " AM"; // get AM/PM
+  return timeValue;
+}
 
 export default function Rightnow({ studentTable }) {
   const [attendance, setAttendance] = useState([]);
@@ -89,24 +111,31 @@ export default function Rightnow({ studentTable }) {
   // console.log(JSON.stringify(studentTable, null, 2));
   // todo: split student table into students who are here and aren't
 
-  const presentStudents = present.map(student => ({
+  const presentStudents = present.map((student) => ({
     first_name: student.first_name,
     last_name: student.last_name,
     photo_url: student.photo_url,
   }));
 
-  const absentStudents = absent.map(student => ({
+  const absentStudents = absent.map((student) => ({
     first_name: student.first_name,
     last_name: student.last_name,
     photo_url: student.photo_url,
   }));
-  
+
   return (
     <>
       <div className={styles["right-now-container"]}>
         <Navbar />
         <div className={styles["right-now-container__content"]}>
-          <ClassHeader className={styles["class-header"]} />
+          <ClassHeader
+            className={styles["class-header"]}
+            day={currentClass.day}
+            title={currentClass.classTitle}
+            start_time={currentClass.meetingStart}
+            end_time={currentClass.meetingEnd}
+            date={currentClass.meetingDate}
+          />
           <div
             className={styles["right-now-container__content__student-lists"]}
           >
