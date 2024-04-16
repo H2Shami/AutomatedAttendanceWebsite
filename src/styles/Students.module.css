@@ -1,5 +1,6 @@
 .mainLayout {
   display: flex;
+  column-gap: 15px;
   position: absolute;
   left: 0px;
   top: 18px;
