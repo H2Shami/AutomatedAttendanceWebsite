@@ -2,9 +2,12 @@ import Navbar from "@/components/Navbar";
 import styles from "@/styles/Courses.module.css";
 import DividerSvg from "../icons/Divider.jsx";
 import { FaPlus } from "react-icons/fa";
+import { PrismaClient } from "@prisma/client";
 import { arrayOf } from "prop-types";
 
-export default function Courses() {
+let profID = 202
+
+export default function Courses({ classesTable }) {
   return (
     <>
       <div className={styles["courses-container"]}>
@@ -27,38 +30,17 @@ export default function Courses() {
               meetingDay="Tues"
               meetingTime="3:00-4:00"
             />
-            <Course
-              color="#f4b030"
-              classCode="CS146"
-              section="02"
-              className="Data Structures and Algorithms"
-              meetingDay="Tues"
-              meetingTime="3:00-4:00"
-            />
-            <Course
-              color="#f4b030"
-              classCode="CS146"
-              section="02"
-              className="Data Structures and Algorithms"
-              meetingDay="Tues"
-              meetingTime="3:00-4:00"
-            />
-            <Course
-              color="#f4b030"
-              classCode="CS146"
-              section="02"
-              className="Data Structures and Algorithms"
-              meetingDay="Tues"
-              meetingTime="3:00-4:00"
-            />
-            <Course
-              color="#f4b030"
-              classCode="CS146"
-              section="02"
-              className="Data Structures and Algorithms"
-              meetingDay="Tues"
-              meetingTime="3:00-4:00"
-            />
+            {classesTable?.map((course) => (
+              <Course 
+                key={course.classid} 
+                color={`#${course.color}`} 
+                classCode={course.class_name}
+                section={course.classid}
+                className={course.class_name}
+                meetingDay={course.days}
+                meetingTime="3:00-4:00"
+              />
+            ))}
           </div>
         </div>
       </div>
@@ -94,4 +76,20 @@ function Course({
       </span>
     </div>
   );
+}
+
+
+export async function getServerSideProps() {
+  const prisma = new PrismaClient();
+
+  // Grab all classes for this professor
+  const classResponse = await prisma.classes.findMany({
+    where: { professorid: profID }
+  });
+
+  return {
+    props: {
+      classesTable: classResponse,
+    },
+  };
 }
