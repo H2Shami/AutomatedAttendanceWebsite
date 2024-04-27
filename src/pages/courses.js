@@ -17,6 +17,7 @@ import Link from "next/link";
 //     meetingStart: "3:00",
 //     meetingEnd: "4:15",
 //   },
+let profID = 202;
 
 const prisma = new PrismaClient();
 
@@ -29,7 +30,7 @@ export default function Courses({ data }) {
           <div className={styles["top-container"]}>
             <span className={styles["top-container__title"]}>
               {" "}
-              Your Courses
+              Select a course
             </span>
             <DividerSvg />
             <button className={styles["add-class-button"]}>
@@ -51,6 +52,7 @@ function CourseCards({ courseData }) {
     const meetingTime = `${data.meetingStart}-${data.meetingEnd}`;
     return (
       <Link
+        style={{ textDecoration: "none" }}
         href={{
           pathname: "/course/[id]",
           query: {
@@ -108,7 +110,9 @@ function Course({
 
 export async function getServerSideProps() {
   // Grab all students for this class
-  const classesResponse = await prisma.classes.findMany({});
+  const classesResponse = await prisma.classes.findMany({
+    where: { professorid: profID },
+  });
 
   // console.log(classesResponse);
   const parsedData = parseClassData(classesResponse);
