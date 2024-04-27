@@ -109,7 +109,7 @@ async def add_photo(student_id: int, file: UploadFile):
 
 
 @app.post("/attendance_record", status_code=201)
-async def add_attendance_record(student_id: int, class_id: int, timestamp):
+async def add_attendance_record(attendanceid: str, student_id: str, class_id: str, timestamp: str):
     # Store URL in db
     conn = psycopg2.connect(
         database=os.getenv("PGDATABASE"),
@@ -121,7 +121,7 @@ async def add_attendance_record(student_id: int, class_id: int, timestamp):
 
     cur = conn.cursor()
     cur.execute(
-        f"INSERT INTO attendance (classid, studentid, entry_timestamp) VALUES ('{class_id}', '{student_id}', '{timestamp}');"
+        f"INSERT INTO attendance (attendanceid, classid, studentid, entry_timestamp) VALUES ('{attendanceid}', '{class_id}', '{student_id}', '{timestamp}');"
     )
     conn.commit()
     cur.close()

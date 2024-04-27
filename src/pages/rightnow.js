@@ -108,7 +108,7 @@ export default function Rightnow({ studentTable }) {
   /* React-query initializes a refetch when we receive a signal from the server, tellling us to update the DB*/
   /* The signal from the server is sent whenever Nano pings attendance insertion endpoint*/
 
-  // console.log(JSON.stringify(studentTable, null, 2));
+   console.log(JSON.stringify(studentTable, null, 2));
   // todo: split student table into students who are here and aren't
 
   const presentStudents = present.map((student) => ({
