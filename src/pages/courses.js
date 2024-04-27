@@ -6,7 +6,7 @@ import { PrismaClient } from "@prisma/client";
 import { arrayOf } from "prop-types";
 import Link from "next/link";
 
-// var data = [
+// sample data:
 //   {
 //     classid: 2222,
 //     color: "#3492cd",
@@ -17,17 +17,6 @@ import Link from "next/link";
 //     meetingStart: "3:00",
 //     meetingEnd: "4:15",
 //   },
-//   {
-//     classid: 3333,
-//     color: "#efb14e",
-//     classCode: "CMPE188",
-//     section: "01",
-//     className: "Machine Learning and Big Data",
-//     meetingDay: "Tuesday",
-//     meetingStart: "10:00",
-//     meetingEnd: "11:15",
-//   },2024-04-12 09:06:39
-// ];
 
 const prisma = new PrismaClient();
 
@@ -117,6 +106,20 @@ function Course({
   );
 }
 
+export async function getServerSideProps() {
+  // Grab all students for this class
+  const classesResponse = await prisma.classes.findMany({});
+
+  // console.log(classesResponse);
+  const parsedData = parseClassData(classesResponse);
+  console.log(parsedData);
+  return {
+    props: {
+      data: parsedData,
+    },
+  };
+}
+
 function parseClassData(classes) {
   return classes.map((data) => ({
     classid: data.classid,
@@ -141,18 +144,4 @@ function convertToWeekday(num) {
     "Saturday",
   ];
   return weekday[num];
-}
-
-export async function getServerSideProps() {
-  // Grab all students for this class
-  const classesResponse = await prisma.classes.findMany({});
-
-  // console.log(classesResponse);
-  const parsedData = parseClassData(classesResponse);
-  console.log(parsedData);
-  return {
-    props: {
-      data: parsedData,
-    },
-  };
 }
