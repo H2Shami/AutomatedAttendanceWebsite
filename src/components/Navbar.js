@@ -9,11 +9,8 @@ function Navbar() {
     <div className={styles.sidebar}>
       <nav className={styles.nav}>
         <ul>
-          <ActiveLink href="/rightnow">
-            <i className="bi bi-calendar-event"></i> Right Now
-          </ActiveLink>
           <ActiveLink href="/courses">
-            <i className="bi bi-hdd-stack"></i> Courses
+            <i className="bi bi-hdd-stack"></i> Home
           </ActiveLink>
           <ActiveLink href="/students">
             <i className="bi bi-people"></i> Students
