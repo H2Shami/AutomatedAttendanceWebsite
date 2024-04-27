@@ -7,7 +7,7 @@ import { arrayOf } from "prop-types";
 import Link from "next/link";
 
 let profID = 202;
-const professorID = sessionStorage.getItem("professorID");
+// const professorID = sessionStorage.getItem("professorID");
 
 
 export default function Courses({ data }) {
