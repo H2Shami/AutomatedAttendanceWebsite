@@ -6,20 +6,9 @@ import { PrismaClient } from "@prisma/client";
 import { arrayOf } from "prop-types";
 import Link from "next/link";
 
-// sample data:
-//   {
-//     classid: 2222,
-//     color: "#3492cd",
-//     classCode: "CS146",
-//     section: "02",
-//     className: "Data Structures and Algorithms",
-//     meetingDay: "Tuesday",
-//     meetingStart: "3:00",
-//     meetingEnd: "4:15",
-//   },
 let profID = 202;
+const professorID = sessionStorage.getItem("professorID");
 
-const prisma = new PrismaClient();
 
 export default function Courses({ data }) {
   return (
@@ -109,6 +98,8 @@ function Course({
 }
 
 export async function getServerSideProps() {
+  const prisma = new PrismaClient();
+
   // Grab all students for this class
   const classesResponse = await prisma.classes.findMany({
     where: { professorid: profID },
