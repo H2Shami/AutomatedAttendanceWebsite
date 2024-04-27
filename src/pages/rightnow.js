@@ -5,8 +5,6 @@ import styles from "@/styles/RightNow.module.css";
 import { PrismaClient } from "@prisma/client";
 import { useEffect, useState } from "react";
 
-const prisma = new PrismaClient();
-
 //-=-=-=-=-=-=  Demo date mock data -=-=-=-=-=-=-=
 
 var rightNow = new Date(); // Date is NOT based on any pulled class data
@@ -112,17 +110,20 @@ export default function Rightnow({ studentTable }) {
   // todo: split student table into students who are here and aren't
 
   const presentStudents = present.map((student) => ({
+    studentid: student.studentid,
     first_name: student.first_name,
     last_name: student.last_name,
     photo_url: student.photo_url,
+    email: student.email
   }));
 
   const absentStudents = absent.map((student) => ({
+    studentid: student.studentid,
     first_name: student.first_name,
     last_name: student.last_name,
     photo_url: student.photo_url,
+    email: student.email
   }));
-
   return (
     <>
       <div className={styles["right-now-container"]}>
@@ -139,8 +140,8 @@ export default function Rightnow({ studentTable }) {
           <div
             className={styles["right-now-container__content__student-lists"]}
           >
-            <StudentList students={presentStudents} label="Present" />
-            <StudentList students={absentStudents} label="Absent" />
+            <StudentList key={1} students={presentStudents} label="Present" />
+            <StudentList key={2} students={absentStudents} label="Absent" />
           </div>
         </div>
       </div>
@@ -149,6 +150,8 @@ export default function Rightnow({ studentTable }) {
 }
 
 export async function getServerSideProps() {
+  const prisma = new PrismaClient();
+
   // Grab all students for this class
   const studentResponse = await prisma.enrollments.findMany({
     where: { classid: currentClass.classid },
