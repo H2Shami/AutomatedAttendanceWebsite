@@ -7,18 +7,7 @@ import { useEffect, useState } from "react";
 
 const prisma = new PrismaClient();
 
-// const attendanceRecords = [{ studentid: 987987987 }, { studentid: 123123123 }];
-
-// async function getAttendance() {
-//   const link = new URL(
-//     `http://localhost:3000/api/getAttendanceForMeeting?classid=${currentClass.classid}&meetingDate=${currentClass.meetingDate}&meetingStart=${currentClass.meetingStart}&meetingEnd=${currentClass.meetingEnd}`
-//   );
-//   const attendance = await fetch(link);
-//   return attendance;
-// }
-
-export default function Rightnow({ studentTable, newClassInfo }) {
-  const [classInfo, setClassInfo] = useState(newClassInfo);
+export default function Rightnow({ studentTable, classInfo }) {
   const [attendance, setAttendance] = useState([]);
   const [present, setPresent] = useState([]);
   const [absent, setAbsent] = useState(studentTable);
@@ -149,7 +138,7 @@ export async function getServerSideProps(context) {
   return {
     props: {
       studentTable: studentResponse,
-      newClassInfo: {
+      classInfo: {
         classid: classid,
         title: context.query.title,
         meetingStart: context.query.meetingStart,
