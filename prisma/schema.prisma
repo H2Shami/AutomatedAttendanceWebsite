@@ -12,8 +12,8 @@ model attendance {
   classid         Int?
   studentid       Int?
   entry_timestamp DateTime? @db.Timestamp(6)
-  classes         classes?  @relation(fields: [classid], references: [classid], onDelete: NoAction, onUpdate: NoAction)
-  students        students? @relation(fields: [studentid], references: [studentid], onDelete: NoAction, onUpdate: NoAction)
+  classes         classes?  @relation(fields: [classid], references: [classid], onDelete: Cascade, onUpdate: Cascade)
+  students        students? @relation(fields: [studentid], references: [studentid], onDelete: Cascade, onUpdate: Cascade)
 }
 
 model classes {
@@ -24,16 +24,18 @@ model classes {
   year        Int?
   days        String?       @db.VarChar(20)
   start_time  DateTime?     @db.Time(6)
+  end_time    DateTime?     @db.Time(6)
+  color       String?       @db.VarChar(6)
   attendance  attendance[]
-  professors  professors?   @relation(fields: [professorid], references: [professorid], onDelete: NoAction, onUpdate: NoAction)
+  professors  professors?   @relation(fields: [professorid], references: [professorid], onDelete: Cascade, onUpdate: Cascade)
   enrollments enrollments[]
 }
 
 model enrollments {
   studentid Int
   classid   Int
-  classes   classes  @relation(fields: [classid], references: [classid], onDelete: NoAction, onUpdate: NoAction)
-  students  students @relation(fields: [studentid], references: [studentid], onDelete: NoAction, onUpdate: NoAction)
+  classes   classes  @relation(fields: [classid], references: [classid], onDelete: Cascade, onUpdate: Cascade)
+  students  students @relation(fields: [studentid], references: [studentid], onDelete: Cascade, onUpdate: Cascade)
 
   @@id([studentid, classid])
 }
