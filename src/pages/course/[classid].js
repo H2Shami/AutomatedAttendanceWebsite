@@ -3,11 +3,100 @@ import ClassHeader from "@/components/ClassHeader";
 import StudentList from "@/components/StudentList";
 import styles from "@/styles/RightNow.module.css";
 import { PrismaClient } from "@prisma/client";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend,
+  Filler,
+  ChartData,
+  ChartArea,
+} from "chart.js";
+import { Line, Chart } from "react-chartjs-2";
+
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend,
+  Filler
+);
 
 const prisma = new PrismaClient();
 
+const options = {
+  scales: {
+    y: {
+      min: 0,
+      max: 100,
+      title: {
+        display: true,
+        text: "Attendance Rate (%)",
+        font: {
+          size: 18,
+        },
+      },
+    },
+    x: {
+      title: {
+        display: true,
+        text: "Date (2024)",
+        font: {
+          size: 18,
+        },
+      },
+    },
+  },
+  responsive: true,
+  plugins: {
+    legend: {
+      position: "top",
+    },
+  },
+};
+
+var labels = [
+  "April 14",
+  "April 16",
+  "April 19",
+  "April 21",
+  "April 26",
+  "April 28",
+  " ",
+];
+
+var attendanceRate = [100, 76, 50, 53, 62, 63, 0];
+
+// chart
+const data = {
+  labels,
+  datasets: [
+    {
+      label: "Attendance Rate (%)",
+      data: attendanceRate,
+      borderColor: "rgb(16, 198, 113)",
+      backgroundColor: "#adf0a7ff",
+      tension: 0.3,
+      pointRadius: 10,
+      pointHoverRadius: 15,
+      fill: true,
+    },
+  ],
+};
+
 export default function Rightnow({ studentTable, classInfo }) {
+  const chartRef = useRef(null);
+  const [chartData, setChartData] = useState({
+    datasets: [],
+  });
   const [attendance, setAttendance] = useState([]);
   const [present, setPresent] = useState([]);
   const [absent, setAbsent] = useState(studentTable);
@@ -49,6 +138,7 @@ export default function Rightnow({ studentTable, classInfo }) {
 
   /* 2. Update the page if we find new attendees (i.e: when the above use effect is called)*/
   useEffect(() => {
+    console.log("found new attendees");
     setPresent(
       studentTable.filter((student) => {
         return studentInList(student.studentid, attendance);
@@ -59,6 +149,29 @@ export default function Rightnow({ studentTable, classInfo }) {
         return !studentInList(student.studentid, attendance);
       })
     );
+
+    // Update chart
+    const chart = chartRef.current;
+
+    if (!chart) {
+      return;
+    }
+
+    labels[labels.length - 1] = "Today";
+    attendanceRate[attendanceRate.length - 1] = getTodaysAttendanceRate(
+      present.length,
+      studentTable.length
+    );
+
+    const chartData = {
+      ...data,
+      datasets: data.datasets.map((dataset) => ({
+        ...dataset,
+        backgroundColor: createGradient(chart.ctx, chart.chartArea),
+      })),
+    };
+
+    setChartData(chartData);
   }, [attendance]);
 
   /* -=-=-=-=-=- Refresh components -- Bottom-up  -=-=-=-=-=-=*/
@@ -102,10 +215,53 @@ export default function Rightnow({ studentTable, classInfo }) {
             <StudentList students={presentStudents} label="Present" />
             <StudentList students={absentStudents} label="Absent" />
           </div>
+          <div className={styles["right-now-container__metrics-container"]}>
+            <Chart
+              ref={chartRef}
+              options={options}
+              type="line"
+              data={chartData}
+            />
+          </div>
         </div>
       </div>
     </>
   );
+}
+
+function createGradient(ctx, area) {
+  const colorStart = "#65e99ce4";
+  const colorEnd = "#bad2c0c8";
+
+  const gradient = ctx.createLinearGradient(0, area.top, 0, area.bottom);
+
+  gradient.addColorStop(0.4, colorStart);
+  gradient.addColorStop(1, colorEnd);
+
+  return gradient;
+}
+
+function getTodaysAttendanceRate(numPresent, numStudents) {
+  return 100 * (numPresent / numStudents);
+}
+
+function getMonthAndDay() {
+  var today = new Date();
+  const months = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ];
+  return `${months[today.getMonth()]} ${today.getDate()}`;
 }
 
 // Credit to: https://stackoverflow.com/users/525895/samuel-meddows
