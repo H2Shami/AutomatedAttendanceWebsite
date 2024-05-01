@@ -1,8 +1,9 @@
 .courses-container {
-  position: absolute;
+  padding-top: 50px;
   left: 0px;
   top: 0px;
-  margin-top: 20px;
+  width: 50%;
+  margin: auto;
   display: flex;
   flex-direction: row;
   column-gap: 10px;

@@ -1,11 +1,11 @@
 .right-now-container {
-  position: absolute;
   left: 0px;
   top: 0px;
-  margin-top: 20px;
+  padding-top: 40px;
+  margin: auto;
+  width: 50%;
   display: flex;
   flex-direction: row;
-  column-gap: 10px;
 }
 
 .right-now-container__content {
@@ -23,7 +23,7 @@
 .right-now-container__metrics-container {
   margin-top: 14px;
   padding: 5px;
-  background-color: #e8e8e8;
+  background-color: #f5f5f5;
   border-radius: 15px;
-  filter: drop-shadow(0px 5px 0px #d6d6d6);
+  filter: drop-shadow(0px 5px 0px #c8c8c8);
 }
