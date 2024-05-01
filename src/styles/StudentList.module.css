@@ -1,11 +1,12 @@
 .StudentList {
   border-radius: 15px;
-  background: #d2d2d2;
-  filter: drop-shadow(0px 0px 6px #d8d8d8);
+  background: #e8e8e8;
+  filter: drop-shadow(0px 5px 0px #dcdcdc);
   font-family: Arial, sans-serif;
   flex-grow: 1; /* This will allow the StudentList to take up the remaining space */
   min-width: 400px; /* You can adjust this as needed */
-  margin-left: 5px; 
+  margin-left: 5px;
+  height: 450px;
 }
 
 .StudentList > strong > p {

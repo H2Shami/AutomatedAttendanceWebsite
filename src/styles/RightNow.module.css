@@ -19,3 +19,11 @@
   flex-direction: row;
   column-gap: 10px;
 }
+
+.right-now-container__metrics-container {
+  margin-top: 14px;
+  padding: 5px;
+  background-color: #e8e8e8;
+  border-radius: 15px;
+  filter: drop-shadow(0px 5px 0px #d6d6d6);
+}

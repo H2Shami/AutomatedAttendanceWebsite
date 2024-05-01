@@ -14,14 +14,14 @@ function ClassHeader({
   var image_url = customization?.image_url;
 
   // mock
-  color = "#4596F4";
+  color = "linear-gradient(to right, #4596f4, #51bced);";
   image_url =
     "https://img.freepik.com/free-vector/hand-drawn-science-education-background_23-2148499325.jpg";
 
   return (
     <div
       className={styles["class-header"]}
-      style={{ backgroundColor: `${color}` }}
+      style={{ backgroundImage: `${color}` }}
     >
       <img className={styles["class-header__photo"]} src={image_url} />
       <section className={styles["class-header__content"]}>

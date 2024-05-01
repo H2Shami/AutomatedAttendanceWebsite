@@ -2,21 +2,21 @@
 
 .StudentCard {
   border-radius: 10px;
-  background: #fff;
+  background: rgb(255, 255, 255);
   display: flex;
   margin: 5px;
   align-self: stretch;
   min-width: 256px;
   align-items: center;
   justify-content: space-between;
-  padding: 10px;
+  filter: drop-shadow(0px 3px 0px #dddddd);
 }
 
 .StudentCard img {
   border-radius: 10px;
   max-width: 64px;
   max-height: 64px;
-  margin: 10px 10px 10px 15px;
+  margin: 5px;
   flex: 1;
 }
 
