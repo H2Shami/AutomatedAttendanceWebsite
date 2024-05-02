@@ -1,8 +1,9 @@
 .courses-container {
-  position: absolute;
+  padding-top: 50px;
   left: 0px;
   top: 0px;
-  margin-top: 20px;
+  width: 50%;
+  margin: auto;
   display: flex;
   flex-direction: row;
   column-gap: 10px;
@@ -27,8 +28,15 @@
   border-radius: 8px;
   padding: 8px;
   position: relative;
+  transition: transform 0.4s ease;
+}
+.course-container:hover {
+  transform: scale(1.03);
 }
 
+.course-container:active {
+  transform: scale(1);
+}
 .course-container__photo {
   width: 100%;
   border-radius: 10px;
